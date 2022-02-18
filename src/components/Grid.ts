@@ -7,6 +7,7 @@ import Game, { GuessResult } from '../Game';
 import courses from '../academic_codes_shuffled.json';
 import allowedWords from '../AllowedWords';
 import startAnimation from '../startAnimation';
+import Overlay from './Overlay';
 
 const words = allowedWords;
 courses.forEach((course: Course) => {
@@ -88,6 +89,12 @@ export default class Grid extends Component {
         });
 
         fireworks.start();
+
+        const overlay = new Overlay(this.root, 'You win!', `You guessed ${guess}! 
+        The degree was a ${this.game.targetCourse.Duration} year 
+        ${this.game.targetCourse.CareerText} program called 
+        ${this.game.targetCourse.ProgramName}!`);
+        console.log(overlay);
       } else {
         console.warn('Could not find container to show fireworks');
       }
