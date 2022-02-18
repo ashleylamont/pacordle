@@ -1,25 +1,10 @@
 import courses from './academic_codes_shuffled.json';
 
 export interface Course {
-  MoleculeHexColour:   string;
   AcademicPlanCode:    string;
   ProgramName:         string;
-  ShortProgramName:    string;
-  Atar:                number | null;
-  AtarText:            string;
   CareerText:          string;
-  AcademicCareer:      string;
-  ProgramAcademicYear: string;
-  DegreeIdentifiers:   string[];
   Duration:            number;
-  Categories:          null;
-  AnchorDegree:        null;
-  Year:                number;
-  ModeOfDelivery:      string;
-  CanCombine:          boolean;
-  CanCombineVertical:  boolean;
-  StudyAsText:         string;
-  StudyAsHelpText:     string;
 }
 
 export enum GuessResult {
@@ -38,6 +23,7 @@ export default class Game {
     const course = courses[dayNumber % courses.length];
     this.targetWord = course.AcademicPlanCode;
     this.targetCourse = course;
+    console.log(`Target word: ${this.targetWord}`);
   }
 
   public evaluateGuess(guess: string): GuessResult[] {

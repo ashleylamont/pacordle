@@ -1,6 +1,7 @@
 import Component from "./Component";
 import cell from './Cell.html?raw';
 import {GuessResult} from "../Game";
+import {startAnimation} from "../animation_util";
 
 export default class Cell extends Component {
   public content: string = '';
@@ -15,6 +16,13 @@ export default class Cell extends Component {
 
   public setContent(content: string): this {
     this.content = content.charAt(0).toUpperCase();
+    if(this.cell.innerText !== this.content) {
+      if (this.content) {
+        startAnimation(this.cell, 'pulseBig', 0.15);
+      } else {
+        startAnimation(this.cell, 'pulseSmall', 0.15);
+      }
+    }
     this.cell.innerText = this.content;
     return this;
   }

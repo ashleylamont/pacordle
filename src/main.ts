@@ -1,4 +1,5 @@
 import './style.scss'
+import 'animate.css';
 import MenuBar from "./components/MenuBar";
 import Grid from "./components/Grid";
 import Game from "./Game";
@@ -13,5 +14,7 @@ document.addEventListener('keydown', (e) => {
       grid.addCharacter(e.key);
     } else if (e.code === 'Backspace'){
       grid.removeCharacter();
+    } else if (e.key === 'Enter'){
+      grid.finishLine();
     }
 });

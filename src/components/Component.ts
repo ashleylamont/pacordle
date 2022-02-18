@@ -1,7 +1,7 @@
 import {v4 as uuid} from 'uuid';
 
 export default abstract class Component {
-    protected root: HTMLElement;
+    public readonly root: HTMLElement;
     protected id: string;
 
     protected constructor(rootElement: HTMLElement) {
