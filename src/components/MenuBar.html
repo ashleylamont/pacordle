@@ -1,7 +1,15 @@
 <!-- Position is fixed because otherwise it adds a scrollbar and I cbf to work out layouts today even though I know it's dead simple to add a flexbox -->
-<div class="w-screen border-b border-solid border-gray-500 flex flex-row justify-around py-1 fixed" id="test">
+<div class="w-screen border-b border-solid border-gray-500 flex flex-row justify-between py-1 fixed px-4" id="test">
+    <div class="flex-shrink text-sm flex flex-col justify-center" style="width: 170px">
+        <span class="flex-shrink">A sh💜tpost by Ashley</span>
+    </div>
     <div class="flex-shrink tooltip-container">
-        <span id="title" class="text-4xl font-title">Placeholder</span>
+        <span id="title" class="text-4xl font-title">Title</span>
         <div class="tooltip-target">/pʌ:kɜ(r)d(ə)l/</div>
+    </div>
+    <div class="flex-shrink text-sm flex flex-col justify-center" style="width: 170px">
+        <span class="flex-shrink hover:underline">
+            <a href="https://github.com/ashleylamont/pacordle">Come sh💜tpost with me!</a>
+        </span>
     </div>
 </div>
