@@ -11,7 +11,9 @@ const game = new Game();
 const grid = new Grid(app, game);
 const overlay = new Overlay(app, 'Welcome to PACordle!', 'Did you ever wish Wordle '
     + 'could be worse? Well now it is! PACordle is like Wordle, but all the answers are degree '
-    + 'codes from ANU Programs and Courses, so it\'s stupid hard to guess 😆. Good luck!');
+    + 'codes from ANU Programs and Courses, so it\'s stupid hard to guess 😆. Good luck! <br/>'
+    + 'Also this doesn\'t work on mobile yet, sorry, but stay tuned for an update in the next '
+    + 'few days!');
 console.log(overlay);
 
 // Add fireworks container.
