@@ -1,10 +1,11 @@
-import Component from "./Component";
+import Component from './Component';
 import cell from './Cell.html?raw';
-import {GuessResult} from "../Game";
-import {startAnimation} from "../animation_util";
+import { GuessResult } from '../Game';
+import startAnimation from '../startAnimation';
 
 export default class Cell extends Component {
   public content: string = '';
+
   private readonly cell: HTMLElement;
 
   constructor(rootElement: HTMLElement) {
@@ -16,7 +17,7 @@ export default class Cell extends Component {
 
   public setContent(content: string): this {
     this.content = content.charAt(0).toUpperCase();
-    if(this.cell.innerText !== this.content) {
+    if (this.cell.innerText !== this.content) {
       if (this.content) {
         startAnimation(this.cell, 'pulseBig', 0.15);
         this.cell.classList.add('border-gray-500');
@@ -47,6 +48,7 @@ export default class Cell extends Component {
       case GuessResult.Unevaluated:
         this.cell.classList.add('bg-red-200');
         break;
+      // skip default
     }
   }
 }

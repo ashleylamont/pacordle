@@ -1,12 +1,12 @@
-import Component from "./Component";
-import Cell from "./Cell";
+import { Fireworks } from 'fireworks-js';
+import Component from './Component';
+import Cell from './Cell';
 import grid from './Grid.html?raw';
-import type {Course} from "../Game";
-import Game, {GuessResult} from "../Game";
+import type { Course } from '../Game';
+import Game, { GuessResult } from '../Game';
 import courses from '../academic_codes_shuffled.json';
-import allowedWords from "../AllowedWords";
-import {startAnimation} from "../animation_util";
-import {Fireworks} from "fireworks-js";
+import allowedWords from '../AllowedWords';
+import startAnimation from '../startAnimation';
 
 const words = allowedWords;
 courses.forEach((course: Course) => {
@@ -15,10 +15,15 @@ courses.forEach((course: Course) => {
 
 export default class Grid extends Component {
   private readonly grid: Cell[][];
+
   private currentCell: number = 0;
+
   private game: Game;
+
   private rowFull: boolean = false;
+
   private rows: HTMLElement[] = [];
+
   private gameOver: boolean = false;
 
   constructor(rootEl: HTMLElement, game: Game) {
@@ -31,8 +36,8 @@ export default class Grid extends Component {
     this.grid = [];
     for (let i = 0; i < 6; i++) {
       this.grid[i] = [];
-      const rowEl = document.createElement("div");
-      rowEl.classList.add("flex-shrink", "flex", "flex-row", "justify-center", "gap-1");
+      const rowEl = document.createElement('div');
+      rowEl.classList.add('flex-shrink', 'flex', 'flex-row', 'justify-center', 'gap-1');
       gridTarget?.append(rowEl);
       this.rows.push(rowEl);
       for (let j = 0; j < 5; j++) {
@@ -42,19 +47,19 @@ export default class Grid extends Component {
   }
 
   public finishLine(): void {
-    if(this.gameOver) return;
+    if (this.gameOver) return;
 
-    if(this.rowFull) {
+    if (this.rowFull) {
       // Evaluate row
       let guess = '';
-      for(let i = 0; i < 5; i++) {
-        guess += this.grid[~~((this.currentCell-1)/5)][i].content;
+      for (let i = 0; i < 5; i++) {
+        guess += this.grid[~~((this.currentCell - 1) / 5)][i].content;
       }
-      if(words.includes(guess.toLowerCase())) {
+      if (words.includes(guess.toLowerCase())) {
         this.handleGuess(guess);
-      }else{
+      } else {
         console.warn(`${guess} is not a valid word`);
-        const row = this.rows[~~((this.currentCell-1)/5)];
+        const row = this.rows[~~((this.currentCell - 1) / 5)];
         startAnimation(row, 'headShake', 0.5);
       }
     }
@@ -70,11 +75,11 @@ export default class Grid extends Component {
     }
     if (victory) {
       this.gameOver = true;
-      console.log("Victory!");
+      console.log('Victory!');
       // Show fireworks
       const container = document.getElementById('fireworks-container');
 
-      if(container) {
+      if (container) {
         const fireworks = new Fireworks(container);
 
         fireworks.setOptions({
@@ -83,8 +88,8 @@ export default class Grid extends Component {
         });
 
         fireworks.start();
-      }else{
-        console.warn("Could not find container to show fireworks");
+      } else {
+        console.warn('Could not find container to show fireworks');
       }
     }
     this.rowFull = false;
@@ -96,22 +101,22 @@ export default class Grid extends Component {
   }
 
   public addCharacter(character: string): void {
-    if(this.gameOver) return;
+    if (this.gameOver) return;
 
-    if(!this.rowFull){
-      this.grid[~~(this.currentCell/5)][this.currentCell%5].setContent(character);
-      this.currentCell++;
-      if(this.currentCell%5 === 0) {
+    if (!this.rowFull) {
+      this.grid[~~(this.currentCell / 5)][this.currentCell % 5].setContent(character);
+      this.currentCell += 1;
+      if (this.currentCell % 5 === 0) {
         this.rowFull = true;
       }
     }
   }
 
   public removeCharacter(): void {
-    if(this.gameOver) return;
+    if (this.gameOver) return;
 
-    if(this.currentCell%5>0 || this.rowFull) {
-      this.currentCell--;
+    if (this.currentCell % 5 > 0 || this.rowFull) {
+      this.currentCell -= 1;
       this.grid[~~(this.currentCell / 5)][this.currentCell % 5].setContent('');
       this.rowFull = false;
     }
