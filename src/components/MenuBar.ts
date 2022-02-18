@@ -1,4 +1,4 @@
-import Component from "./component";
+import Component from "./Component";
 import menuBar from './MenuBar.html?raw';
 
 export default class MenuBar extends Component {
