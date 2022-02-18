@@ -1,4 +1,4 @@
-import courses from './academic_codes.json';
+import courses from './academic_codes_shuffled.json';
 
 export interface Course {
   MoleculeHexColour:   string;
