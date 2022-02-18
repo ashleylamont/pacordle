@@ -90,10 +90,14 @@ export default class Grid extends Component {
 
         fireworks.start();
 
-        const overlay = new Overlay(this.root, 'You win!', `You guessed ${guess}! 
+        const overlay = new Overlay(
+          this.root,
+          'You win!',
+          `You guessed ${this.game.targetWord}! 
         The degree was a ${this.game.targetCourse.Duration} year 
         ${this.game.targetCourse.CareerText} program called 
-        ${this.game.targetCourse.ProgramName}!`);
+        ${this.game.targetCourse.ProgramName}!`,
+        );
         console.log(overlay);
       } else {
         console.warn('Could not find container to show fireworks');
@@ -104,6 +108,16 @@ export default class Grid extends Component {
     if (this.currentCell >= this.grid.length * 5) {
       console.log('Game over');
       this.gameOver = true;
+
+      const overlay = new Overlay(
+        this.root,
+        'You lose!',
+        `You were looking for ${this.game.targetWord}! 
+        The degree was a ${this.game.targetCourse.Duration} year 
+        ${this.game.targetCourse.CareerText} program called 
+        ${this.game.targetCourse.ProgramName}!`,
+      );
+      console.log(overlay);
     }
   }
 
