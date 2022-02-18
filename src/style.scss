@@ -45,11 +45,7 @@
   height: 52px;
 }
 
-#app {
-  height: 100%;
-}
-
-html, body {
+html, body, #app {
   width: 100vw;
   height: 100vh;
 }
@@ -90,4 +86,13 @@ html, body {
   to {
     transform: scale(1);
   }
+}
+
+#fireworks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+  z-index: -1;
 }

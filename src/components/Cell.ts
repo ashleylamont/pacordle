@@ -19,8 +19,12 @@ export default class Cell extends Component {
     if(this.cell.innerText !== this.content) {
       if (this.content) {
         startAnimation(this.cell, 'pulseBig', 0.15);
+        this.cell.classList.add('border-gray-500');
+        this.cell.classList.remove('border-gray-300');
       } else {
         startAnimation(this.cell, 'pulseSmall', 0.15);
+        this.cell.classList.add('border-gray-300');
+        this.cell.classList.remove('border-gray-500');
       }
     }
     this.cell.innerText = this.content;
@@ -28,7 +32,7 @@ export default class Cell extends Component {
   }
 
   public setResult(result: GuessResult): void {
-    this.cell.classList.remove('border-2');
+    this.cell.classList.remove('border-2', 'bg-white');
     this.cell.classList.add('text-white');
     switch (result) {
       case GuessResult.Correct:

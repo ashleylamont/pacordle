@@ -1,11 +1,12 @@
 import Component from "./Component";
 import Cell from "./Cell";
 import grid from './Grid.html?raw';
-import Game from "../Game";
 import type {Course} from "../Game";
+import Game, {GuessResult} from "../Game";
 import courses from '../academic_codes_shuffled.json';
 import allowedWords from "../AllowedWords";
 import {startAnimation} from "../animation_util";
+import {Fireworks} from "fireworks-js";
 
 const words = allowedWords;
 courses.forEach((course: Course) => {
@@ -18,6 +19,7 @@ export default class Grid extends Component {
   private game: Game;
   private rowFull: boolean = false;
   private rows: HTMLElement[] = [];
+  private gameOver: boolean = false;
 
   constructor(rootEl: HTMLElement, game: Game) {
     super(rootEl);
@@ -40,6 +42,8 @@ export default class Grid extends Component {
   }
 
   public finishLine(): void {
+    if(this.gameOver) return;
+
     if(this.rowFull) {
       // Evaluate row
       let guess = '';
@@ -47,22 +51,53 @@ export default class Grid extends Component {
         guess += this.grid[~~((this.currentCell-1)/5)][i].content;
       }
       if(words.includes(guess.toLowerCase())) {
-        const result = this.game.evaluateGuess(guess);
-        for (let i = 0; i < 5; i++) {
-          this.grid[~~((this.currentCell-1)/5)][i].setResult(result[i]);
-        }
-        this.rowFull = false;
+        this.handleGuess(guess);
       }else{
         console.warn(`${guess} is not a valid word`);
         const row = this.rows[~~((this.currentCell-1)/5)];
-        console.log(row);
         startAnimation(row, 'headShake', 0.5);
       }
     }
+  }
 
+  private handleGuess(guess: string) {
+    const result = this.game.evaluateGuess(guess);
+    let victory = true;
+    for (let i = 0; i < 5; i++) {
+      if (result[i] !== GuessResult.Correct) victory = false;
+
+      this.grid[~~((this.currentCell - 1) / 5)][i].setResult(result[i]);
+    }
+    if (victory) {
+      this.gameOver = true;
+      console.log("Victory!");
+      // Show fireworks
+      const container = document.getElementById('fireworks-container');
+
+      if(container) {
+        const fireworks = new Fireworks(container);
+
+        fireworks.setOptions({
+          opacity: 1,
+          speed: 0.1,
+        });
+
+        fireworks.start();
+      }else{
+        console.warn("Could not find container to show fireworks");
+      }
+    }
+    this.rowFull = false;
+
+    if (this.currentCell >= this.grid.length * 5) {
+      console.log('Game over');
+      this.gameOver = true;
+    }
   }
 
   public addCharacter(character: string): void {
+    if(this.gameOver) return;
+
     if(!this.rowFull){
       this.grid[~~(this.currentCell/5)][this.currentCell%5].setContent(character);
       this.currentCell++;
@@ -73,6 +108,8 @@ export default class Grid extends Component {
   }
 
   public removeCharacter(): void {
+    if(this.gameOver) return;
+
     if(this.currentCell%5>0 || this.rowFull) {
       this.currentCell--;
       this.grid[~~(this.currentCell / 5)][this.currentCell % 5].setContent('');

@@ -9,6 +9,11 @@ new MenuBar(app).setTitle('PACordle');
 const game = new Game();
 const grid = new Grid(app, game);
 
+// Add fireworks container.
+const fireworksContainer = document.createElement('div');
+fireworksContainer.id = 'fireworks-container';
+app.appendChild(fireworksContainer);
+
 document.addEventListener('keydown', (e) => {
     if (e.code.startsWith('Key')){
       grid.addCharacter(e.key);
