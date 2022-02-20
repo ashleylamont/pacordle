@@ -64,6 +64,7 @@ export default class Game {
       const guessChar = guess[i];
       if (result[i] === GuessResult.Unevaluated && charFreq[guessChar]) {
         result[i] = GuessResult.Present;
+        charFreq[guessChar] -= 1;
       } else if (result[i] === GuessResult.Unevaluated) {
         result[i] = GuessResult.Absent;
       }
